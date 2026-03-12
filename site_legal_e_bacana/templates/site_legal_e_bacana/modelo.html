@@ -1,0 +1,174 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+    {% block titulo%}
+    Site Legal ponto com
+    {% endblock titulo%}
+</title>
+
+<!-- Bootstrap CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+/* Espaço para navbar fixa */
+body{
+    padding-top:70px;
+    background:#f5f7ff;
+}
+
+/* Comic Sans para títulos */
+.comic{
+    font-family:"Comic Sans MS", cursive, sans-serif;
+}
+
+/* Navbar colorida */
+.navbar{
+    background: linear-gradient(90deg,#4facfe,#00f2fe);
+}
+
+/* Título */
+.titulo{
+    color:#333;
+}
+
+/* Cards coloridos */
+.card{
+    border-radius:12px;
+}
+
+.card-1{
+    background:#e3f2fd;
+}
+
+.card-2{
+    background:#e8f5e9;
+}
+
+.card-3{
+    background:#fff3e0;
+}
+
+/* Rodapé */
+footer{
+    margin-top:50px;
+    background:linear-gradient(90deg,#667eea,#764ba2);
+    color:white;
+    padding:25px;
+}
+
+</style>
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<div class="container">
+
+<a class="navbar-brand comic" href="#">MeuSite</a>
+
+<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="menu">
+
+<ul class="navbar-nav ms-auto">
+
+<li class="nav-item">
+<a class="nav-link comic" href="{%url "Le_Start" %}">Início</a>
+</li>
+
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle comic" href="#" data-bs-toggle="dropdown">
+Menu
+</a>
+
+<ul class="dropdown-menu">
+<li><a class="dropdown-item comic" href="#">Opção 1</a></li>
+<li><a class="dropdown-item comic" href="#">Opção 2</a></li>
+<li><a class="dropdown-item comic" href="#">Opção 3</a></li>
+</ul>
+</li>
+
+<li class="nav-item">
+<a class="nav-link comic" href="{% url "contatos" %}">Contato</a>
+</li>
+
+</ul>
+
+</div>
+</div>
+</nav>
+
+<!-- Conteúdo -->
+ {% block conteudo %}
+<div class="container">
+
+<h1 id= "titulo" class="comic titulo mt-4">Título da Página</h1>
+<script>
+function corAleatoria() {
+    let r = Math.floor(Math.random()*256);
+    let g = Math.floor(Math.random()*256);
+    let b = Math.floor(Math.random()*256);
+    return `rgb(${r},${g},${b})`;
+}
+
+document.getElementById("titulo").style.color = corAleatoria();
+</script>
+
+
+<p>
+Este é um exemplo de conteúdo usando Bootstrap.  
+O layout é simples, responsivo e utiliza algumas cores suaves.
+</p>
+
+<div class="row mt-4">
+
+<div class="col-md-4">
+<div class="card card-1 p-3">
+<h5 class="comic">Seção 1</h5>
+<p>Conteúdo de exemplo para a primeira seção.</p>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card card-2 p-3">
+<h5 class="comic">Seção 2</h5>
+<p>Conteúdo de exemplo para a segunda seção.</p>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card card-3 p-3">
+<h5 class="comic">Seção 3</h5>
+<p>Conteúdo de exemplo para a terceira seção.</p>
+</div>
+</div>
+
+</div>
+
+</div>
+{% endblock conteudo %}
+<!-- Rodapé -->
+<footer class="text-center">
+
+<h5 class="comic">Rodapé</h5>
+
+<p>© 2026 MeuSite - Todos os direitos reservados.</p>
+
+<p>Links úteis | Política de Privacidade | Contato</p>
+
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

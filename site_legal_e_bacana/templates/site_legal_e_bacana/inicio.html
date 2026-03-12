@@ -1,0 +1,101 @@
+{% extends "site_legal_e_bacana/modelo.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Título legal</title>
+    <link rel="stylesheet" href="{% static "css/estilo.css" %}">
+    
+    <style>
+
+       
+</head>
+<body>
+
+    {%block conteudo%}
+
+    <style>
+     h1{
+            font-family: Comic Sans MS;
+        }
+    
+     #dvd{
+            position:absolute;
+     }
+    </style>
+
+
+    <h1 id="titulo">Título Épico</h1>
+    <p id="dvd">Tiriguidiguidum </p>
+
+   
+
+    <script>
+function corAleatoria() {
+    let r = Math.floor(Math.random()*256);
+    let g = Math.floor(Math.random()*256);
+    let b = Math.floor(Math.random()*256);
+    return `rgb(${r},${g},${b})`;
+}
+
+document.getElementById("titulo").style.color = corAleatoria();
+
+
+const dvd = document.getElementById("dvd");
+
+let x = 100;
+let y = 100;
+
+let vx = 3;
+let vy = 3;
+
+let rot = 0;
+
+function animar(){
+
+    x += vx;
+    y += vy;
+
+    rot += 5
+
+    const larguraTela = window.innerWidth;
+    const alturaTela = window.innerHeight;
+
+    const larguraElemento = dvd.offsetWidth;
+    const alturaElemento = dvd.offsetHeight;
+
+    if(x + larguraElemento >= larguraTela || x <= 0){
+        vx = -vx;
+        dvd.style.color = "hsl(" + Math.random()*360 + "deg,100%,50%)";
+        
+    }
+
+    if(y + alturaElemento >= alturaTela || y <= 0){
+        vy = -vy;
+        dvd.style.color = "hsl(" + Math.random()*360 + "deg,100%,50%)";
+        
+    }
+
+    dvd.style.left = x + "px";
+    dvd.style.top = y + "px"; 
+    dvd.style.transform = "rotate(" + rot + "deg)";
+
+    requestAnimationFrame(animar);
+    
+}
+
+animar();
+</script>
+
+    <ul>
+        <li><a href="{% url "sobre" %}">Sobre Nois</a></li>
+        <li><a href="{% url "contatos" %}">Contatos com o criador</a></li>
+
+    </ul>
+   {%endblock conteudo%} 
+</body>
+</html>
