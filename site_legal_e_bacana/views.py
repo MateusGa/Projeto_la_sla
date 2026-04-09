@@ -1,13 +1,282 @@
 from django.views.generic import TemplateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView 
+from django.urls import reverse_lazy
+from .models import Evento, Subtarefa, Anexo, Lembrete, Ususario
+
+
 
 class Index(TemplateView):
     template_name = "site_legal_e_bacana/inicio.html"
 
+
+
 class Sobre(TemplateView):
     template_name = "site_legal_e_bacana/sobre.html"
+
+
 
 class Contato(TemplateView):
     template_name = "site_legal_e_bacana/contatos.html"
     
+
+
 class Modelo(TemplateView):
     template_name = "site_legal_e_bacana/modelo.html"
+
+
+
+
+#_________________________________________________Views para Eventos_________________________________________________#
+
+
+
+
+class EventoCreate(CreateView):
+
+    model = Evento
+    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir"]
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Criação de Eventos",
+                "botao" : "Criar"
+
+    }
+
+
+
+class EventoUpdate(UpdateView):
+
+    model = Evento
+    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir"]
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Edição de Eventos",
+                "botao" : "Salvar"
+
+    }
+
+
+
+class EventoDelete(DeleteView):
+
+    model = Evento
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Exclusão de Eventos",
+                "botao" : "Excluir para Todo o Sempre"
+
+    }
+
+
+
+class EventoList(ListView):
+    
+    model = Evento
+    template_name = "site_legal_e_bacana/listas/eventos.html"
+
+
+
+class EventoDetail(DetailView):
+
+    model : Evento
+    template_name = "site_legal_e_bacana/ver/eventos.html"
+
+
+
+
+
+#_________________________________________________Views para Subtarefas_________________________________________________#
+
+
+
+
+class SubtarefaCreate(CreateView):
+
+    model = Subtarefa
+    fields =  ["Subtarefa_nome", "Subtarefa_concluida"]
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Criação de Subtarefas",
+                "botao" : "Criar"
+
+    }
+
+
+
+class SubtarefaUpdate(UpdateView):
+
+    model = Subtarefa
+    fields =  ["Subtarefa_nome", "Subtarefa_concluida"]
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Edição de Subtarefas",
+                "botao" : "Salvar"
+
+    }
+
+
+
+class SubtarefaDelete(DeleteView):
+
+    model = Subtarefa
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Exclusão de Subtarefa",
+                "botao" : "Excluir para Todo o Sempre"
+
+    }
+
+
+
+class SubtarefaList(ListView):
+    
+    model = Subtarefa
+    template_name = "site_legal_e_bacana/listas/subtarefas.html"
+
+
+
+class SubtarefaDetail(DetailView):
+
+    model : Subtarefa
+    template_name = "site_legal_e_bacana/ver/subtarefas.html"
+
+
+
+
+
+#_________________________________________________Views para Anexos_________________________________________________#
+
+
+
+
+class AnexoCreate(CreateView):
+
+    model = Anexo
+    fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho"]
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Criação de Subtarefas",
+                "botao" : "Criar"
+
+    }
+
+
+
+class AnexoUpdate(UpdateView):
+
+    model = Anexo
+    fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho"]
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Edição de Anexos",
+                "botao" : "Salvar"
+
+    }
+
+
+
+class AnexoDelete(DeleteView):
+
+    model = Anexo
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Exclusão de Anexos",
+                "botao" : "Excluir para Todo o Sempre"
+
+    }
+
+
+
+class AnexoList(ListView):
+    
+    model = Anexo
+    template_name = "site_legal_e_bacana/listas/anexos.html"
+
+
+
+class AnexoDetail(DetailView):
+
+    model : Anexo
+    template_name = "site_legal_e_bacana/ver/anexos.html"
+
+
+
+
+#_________________________________________________Views para Lembretes_________________________________________________#
+
+
+class LembreteCreate(CreateView):
+
+    model = Lembrete
+    fields =  ["Lembrete_nome", "Lembrete_date", "Lembrete_desc"]
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Criação de Lembretes",
+                "botao" : "Criar"
+
+    }
+
+
+
+class LembreteUpdate(UpdateView):
+
+    model = Lembrete
+    fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho"]
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Edição de Lembretes",
+                "botao" : "Salvar"
+
+    }
+
+
+
+class LembreteDelete(DeleteView):
+
+    model = Lembrete
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Exclusão de Lembretes",
+                "botao" : "Excluir para Todo o Sempre"
+
+    }
+
+
+
+class LembreteList(ListView):
+    
+    model = Lembrete
+    template_name = "site_legal_e_bacana/listas/lembretes.html"
+
+
+
+class LembreteDetail(DetailView):
+
+    model : Lembrete
+    template_name = "site_legal_e_bacana/ver/lembretes.html"
