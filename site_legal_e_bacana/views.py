@@ -3,27 +3,31 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView 
 from django.urls import reverse_lazy
-from .models import Evento, Subtarefa, Anexo, Lembrete, Ususario
+from .models import Evento, Subtarefa, Anexo, Lembrete, Usuario
 
 
 
 class Index(TemplateView):
     template_name = "site_legal_e_bacana/inicio.html"
+    paginate_by = 50
 
 
 
 class Sobre(TemplateView):
     template_name = "site_legal_e_bacana/sobre.html"
+    paginate_by = 50
 
 
 
 class Contato(TemplateView):
     template_name = "site_legal_e_bacana/contatos.html"
+    paginate_by = 50
     
 
 
 class Modelo(TemplateView):
     template_name = "site_legal_e_bacana/modelo.html"
+    paginate_by = 50
 
 
 
@@ -45,6 +49,7 @@ class EventoCreate(CreateView):
                 "botao" : "Criar"
 
     }
+
 
 
 

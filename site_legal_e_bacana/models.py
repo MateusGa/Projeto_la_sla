@@ -3,14 +3,14 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class Ususario(models.Model):
+class Usuario(models.Model):
 
     Usuario_nome = models.CharField(max_length=50, verbose_name='Seu 🫵 nome')
     Usuario_email = models.EmailField(max_length=254, verbose_name='Seu E-mail')
     Usuario_senha = models.CharField(max_length=30, verbose_name='Seu nome')
 
     def __str__(self):
-        return self.Usuario_nome
+        return f"{self.Usuario_nome}"
 
 
 class Evento(models.Model):
@@ -21,10 +21,12 @@ class Evento(models.Model):
     Evento_entrega = models.DateField()
     Evento_repetir = models.BooleanField()
 
-    Evento_usuario = models.ForeignKey(Ususario, on_delete=models.CASCADE)
+
+    #Evento_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    
 
     def __str__(self):
-        return self.Evento_nome
+        return f"{self.Evento_nome}"
     
     
 class Subtarefa(models.Model):
@@ -35,7 +37,11 @@ class Subtarefa(models.Model):
     Subtarefa_evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.Subtarefa_nome
+
+        if self.Subtarefa_concluida:
+            return (f"{self.Subtarefa_nome} - Concluído")
+        else:
+            return (f"{self.Subtarefa_nome} - Não Concluído 👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎")
 
 
 class Anexo(models.Model):
@@ -47,7 +53,7 @@ class Anexo(models.Model):
     Anexo_evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.Anexo_nome
+        return f"{self.Anexo_nome}"
 
 
 class Lembrete(models.Model):
@@ -59,5 +65,5 @@ class Lembrete(models.Model):
     Lembrete_evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.Lembrete_nome
+        return f"{self.Lembrete_nome}"
 

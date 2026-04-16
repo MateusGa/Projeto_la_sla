@@ -1,0 +1,66 @@
+{% extends "site_legal_e_bacana/modelo.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    {%block conteudo%}
+     <style>
+     h1{
+            font-family: Comic Sans MS;
+        }
+    </style>
+
+    <h1 id="titulo">LISTA DE EVENTOS</h1>
+
+    <p>A LSITA DE EVENTOS</p>
+
+
+
+    <table class = "table table-striped table hover">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+
+        {% for EVENTOS in Object_list%}
+        <tr>
+
+            <td> {{ EVENTOS.nome}} </td>
+
+            <td>
+                <a href="{% url "eventos_ver" EVENTOS.pk %}">Ver</a>
+                <a href="{% url "eventos_update" EVENTOS.pk %}">Editar</a>
+                <a href="{% url "eventos_delete" EVENTOS.pk %}">Excluir</a>
+
+            </td>
+
+
+
+
+        {%endfor%}
+
+
+
+
+     <script>
+function corAleatoria() {
+    let r = Math.floor(Math.random()*256);
+    let g = Math.floor(Math.random()*256);
+    let b = Math.floor(Math.random()*256);
+    return `rgb(${r},${g},${b})`;
+}
+
+document.getElementById("titulo").style.color = corAleatoria();
+</script>
+    {%endblock conteudo%}
+</body>
+</html>
