@@ -91,8 +91,16 @@ class EventoList(ListView):
 
 class EventoDetail(DetailView):
 
-    model : Evento
-    template_name = "site_legal_e_bacana/ver/eventos.html"
+    model = Evento
+    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir"]
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Olhando Eventos",
+                "botao" : "Voltar"
+
+    }
 
 
 
