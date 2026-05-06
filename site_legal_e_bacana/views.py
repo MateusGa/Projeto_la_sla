@@ -3,6 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView 
 from django.urls import reverse_lazy
+from datetime import *
 from .models import Evento, Subtarefa, Anexo, Lembrete, Usuario
 
 
@@ -40,7 +41,7 @@ class Modelo(TemplateView):
 class EventoCreate(CreateView):
 
     model = Evento
-    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir"]
+    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -56,7 +57,7 @@ class EventoCreate(CreateView):
 class EventoUpdate(UpdateView):
 
     model = Evento
-    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir"]
+    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -87,13 +88,27 @@ class EventoList(ListView):
     model = Evento
     template_name = "site_legal_e_bacana/listas/eventos.html"
 
+    def get_queryset(self):
+
+        queryset = super().get_queryset()
+
+        hoje = date.today()
+
+        for evento in queryset:
+
+            evento.dias = (
+                evento.Evento_entrega - hoje
+            ).days
+
+        return queryset
+
 
 
 class EventoDetail(DetailView):
 
     model = Evento
-    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir"]
-    template_name = "site_legal_e_bacana/form.html"
+    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao"]
+    template_name = "site_legal_e_bacana/ver/eventos.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
                 

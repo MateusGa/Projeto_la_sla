@@ -20,6 +20,7 @@ class Evento(models.Model):
     Evento_materia = models.CharField(max_length=50)
     Evento_entrega = models.DateField()
     Evento_repetir = models.BooleanField()
+    Evento_descricao = models.TextField(verbose_name="Descrição")
 
 
     #Evento_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
