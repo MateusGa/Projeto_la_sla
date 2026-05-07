@@ -13,14 +13,36 @@
      <style>
      h1{
             font-family: Comic Sans MS;
+            margin: 30px;
         }
+
+        .o_flex{
+            display: flex
+        }
+        .o_flex div {
+        margin: 10px;
+        padding: 20px;
+        }
+
     </style>
 
     <h1 class="comic" id="titulo">SOBRE NÓS</h1>
 
-    <p>Não tem nada sobre nós, nós não existimos.</p>
-     <script>
-function corAleatoria() {
+    <div class="o_flex">
+
+        <div>
+        <p class="comic" >Não tem nada sobre nós como associação, nós não existimos.
+            
+        </p>
+        <p class="comic" > Porém o projeto MeuSite tem como plano ser uma agenda virtual focada no meio acadêmico,</br> 
+            onde o usuário pode anotar tarefas e trabalhos, definir uma data de entrega, definir uma matéria, dar uma descrição e definir o tipo de obrigação (tarefa, trabalho, prova,).</br> 
+            Futuramente também terá a funcionalidade de fazer subtarefas para cada evento, e até mesmo colocar arquivos anexos em cada evento.
+        </p>
+        </div>
+    </div>
+    
+    <script>
+    function corAleatoria() {
     let r = Math.floor(Math.random()*256);
     let g = Math.floor(Math.random()*256);
     let b = Math.floor(Math.random()*256);

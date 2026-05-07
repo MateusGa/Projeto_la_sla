@@ -41,7 +41,7 @@ class Modelo(TemplateView):
 class EventoCreate(CreateView):
 
     model = Evento
-    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao"]
+    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao", "Evento_anexos"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -57,7 +57,7 @@ class EventoCreate(CreateView):
 class EventoUpdate(UpdateView):
 
     model = Evento
-    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao"]
+    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao", "Evento_anexos"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -107,7 +107,7 @@ class EventoList(ListView):
 class EventoDetail(DetailView):
 
     model = Evento
-    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao"]
+    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao", "Evento_anexos"]
     template_name = "site_legal_e_bacana/ver/eventos.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {

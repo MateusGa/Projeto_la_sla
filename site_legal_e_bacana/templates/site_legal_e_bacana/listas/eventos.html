@@ -15,7 +15,7 @@ h1{
 
 <p>A LISTA DE EVENTOS</p>
 
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover comic">
 
     <thead>
         <tr>
@@ -33,13 +33,13 @@ h1{
             <td>{{ evento.Evento_nome }}</td>
 
             <td>
-                <a href="{% url "eventos_ver" evento.pk %}">Ver</a> &emsp;
+                <a class="comic" href="{% url "eventos_ver" evento.pk %}">Ver</a> &emsp;
 
-                <a href="{% url "eventos_update" evento.pk %}">
+                <a class="comic" href="{% url "eventos_update" evento.pk %}">
                     Corrigir seus Erros
                 </a> &emsp;
 
-                <a href="{% url "eventos_delete" evento.pk %}">
+                <a class="comic" href="{% url "eventos_delete" evento.pk %}">
                     APAGAR
                 </a>
             </td>

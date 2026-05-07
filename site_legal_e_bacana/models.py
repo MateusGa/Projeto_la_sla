@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 from django.contrib.auth.models import User
 # Create your models here.
 
@@ -21,6 +22,8 @@ class Evento(models.Model):
     Evento_entrega = models.DateField()
     Evento_repetir = models.BooleanField()
     Evento_descricao = models.TextField(verbose_name="Descrição")
+    #Evento_anexos = models.FileField(verbose_name="Anexos", upload_to='Documentos/', blank="True")
+    #tem que fazer com url
 
 
     #Evento_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
