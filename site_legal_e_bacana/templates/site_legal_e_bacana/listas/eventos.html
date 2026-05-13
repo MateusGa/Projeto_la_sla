@@ -33,26 +33,26 @@ h1{
             <td>{{ evento.Evento_nome }}</td>
 
             <td>
-                <a class="comic" href="{% url "eventos_ver" evento.pk %}">Ver</a> &emsp;
+                <a class="comic linhazinha" href="{% url "eventos_ver" evento.pk %}">Ver</a> &emsp;
 
-                <a class="comic" href="{% url "eventos_update" evento.pk %}">
+                <a class="comic linhazinha" href="{% url "eventos_update" evento.pk %}">
                     Corrigir seus Erros
                 </a> &emsp;
 
-                <a class="comic" href="{% url "eventos_delete" evento.pk %}">
+                <a class="comic linhazinha" href="{% url "eventos_delete" evento.pk %}">
                     APAGAR
                 </a>
             </td>
 
             <td>    
                     {% if evento.dias > 0 %}
-                    Faltam {{ evento.dias }} dias
+                    <span class="treme" style= "color : green">Faltam {{ evento.dias }} dias</span>
 
                     {% elif evento.dias < 0 %}
-                    Passou {{ evento.dias|add:"-1" }} dias
+                    <span class="treme" style= "color : red">Passou {{ evento.dias|add:"-1" }} dias</span>
 
                     {% else %}
-                    Acabou seu tempo
+                    <span class="treme" style= "color : rgb(0, 136, 182)">Acabou seu tempo</span>
                     {% endif %}
 
 

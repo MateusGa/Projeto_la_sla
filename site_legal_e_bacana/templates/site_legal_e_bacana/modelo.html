@@ -34,6 +34,46 @@ body{
     font-family:"Comic Sans MS", cursive, sans-serif;
 }
 
+a{
+    text-decoration: none;
+}
+.linhazinha:hover{
+
+    color: rgb(255, 115, 0);
+    text-decoration:underline;
+
+}
+.treme{
+
+    display: inline-block;
+}
+.treme:hover {
+
+    animation: chacoalhar 0.2s infinite;
+
+}
+
+@keyframes chacoalhar {
+
+    0% {
+        transform: translateX(0px) translateY(0px);
+         rotate: 5deg;
+    }
+    25% {
+        transform: translateX(-2px) translateY(2px);
+    }
+    50% {
+        transform: translateX(2px) translateY(-2px);
+        rotate: -5deg;
+    }
+    75% {
+        transform: translateX(-2px) translateY(-2px);
+    }
+    100% {
+        transform: translateX(0px)  translateY(0px);
+    }
+
+}
 /* Navbar colorida */
 .navbar{
     background: linear-gradient(90deg,#4facfe,#00f2fe);
@@ -108,7 +148,7 @@ Menu
 </li>
 
 <li class="nav-item">
-<a class="nav-link comic" href="{% url "contatos" %}">Contato</a>
+<a class="nav-link comic" href="{% url "sobre" %}">Sobre Nós</a>
 </li>
 
 </ul>

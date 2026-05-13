@@ -4,7 +4,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView 
 from django.urls import reverse_lazy
 from datetime import *
-from .models import Evento, Subtarefa, Anexo, Lembrete, Usuario
+from .models import Evento, Subtarefa, Anexo, Lembrete, Usuario, Participante
 
 
 
@@ -41,7 +41,7 @@ class Modelo(TemplateView):
 class EventoCreate(CreateView):
 
     model = Evento
-    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao", "Evento_anexos"]
+    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -90,7 +90,7 @@ class EventoList(ListView):
 
     def get_queryset(self):
 
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by("-Evento_entrega")
 
         hoje = date.today()
 
@@ -129,7 +129,7 @@ class EventoDetail(DetailView):
 class SubtarefaCreate(CreateView):
 
     model = Subtarefa
-    fields =  ["Subtarefa_nome", "Subtarefa_concluida"]
+    fields =  ["Subtarefa_nome", "Subtarefa_concluida", "Subtarefa_evento"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -144,7 +144,7 @@ class SubtarefaCreate(CreateView):
 class SubtarefaUpdate(UpdateView):
 
     model = Subtarefa
-    fields =  ["Subtarefa_nome", "Subtarefa_concluida"]
+    fields =  ["Subtarefa_nome", "Subtarefa_concluida", "Subtarefa_evento"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -179,7 +179,7 @@ class SubtarefaList(ListView):
 
 class SubtarefaDetail(DetailView):
 
-    model : Subtarefa
+    model = Subtarefa
     template_name = "site_legal_e_bacana/ver/subtarefas.html"
 
 
@@ -194,7 +194,7 @@ class SubtarefaDetail(DetailView):
 class AnexoCreate(CreateView):
 
     model = Anexo
-    fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho"]
+    fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho", "Anexo_evento"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -209,7 +209,7 @@ class AnexoCreate(CreateView):
 class AnexoUpdate(UpdateView):
 
     model = Anexo
-    fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho"]
+    fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho", "Anexo_evento"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -244,7 +244,7 @@ class AnexoList(ListView):
 
 class AnexoDetail(DetailView):
 
-    model : Anexo
+    model = Anexo
     template_name = "site_legal_e_bacana/ver/anexos.html"
 
 
@@ -256,7 +256,7 @@ class AnexoDetail(DetailView):
 class LembreteCreate(CreateView):
 
     model = Lembrete
-    fields =  ["Lembrete_nome", "Lembrete_date", "Lembrete_desc"]
+    fields =  ["Lembrete_nome", "Lembrete_date", "Lembrete_desc", "Lembrete_evento"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -271,7 +271,7 @@ class LembreteCreate(CreateView):
 class LembreteUpdate(UpdateView):
 
     model = Lembrete
-    fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho"]
+    fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho", "Lembrete_evento"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -306,5 +306,65 @@ class LembreteList(ListView):
 
 class LembreteDetail(DetailView):
 
-    model : Lembrete
+    model = Lembrete
     template_name = "site_legal_e_bacana/ver/lembretes.html"
+
+
+#_________________________________________________Views para Participantes_________________________________________________#
+
+
+class ParticipanteCreate(CreateView):
+
+    model = Participante
+    fields =  ["Participante_nome", "Participante_email", "Participante_senha"]
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Adicionar Participantes",
+                "botao" : "Adicionar"
+
+    }
+
+
+
+class ParticipanteUpdate(UpdateView):
+
+    model = Participante
+    fields =  ["Participante_nome", "Participante_email", "Participante_senha"]
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Edição de Participantes",
+                "botao" : "Salvar"
+
+    }
+
+
+
+class ParticipanteDelete(DeleteView):
+
+    model = Participante
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("Le_Start")
+    extra_context = {
+                
+                "titulo" : "Exclusão de Participantes",
+                "botao" : "Silencia-lo"
+
+    }
+
+
+
+class ParticipanteList(ListView):
+    
+    model = Participante
+    template_name = "site_legal_e_bacana/listas/participante.html"
+
+
+
+class ParticipanteDetail(DetailView):
+
+    model = Participante
+    template_name = "site_legal_e_bacana/ver/participante.html"

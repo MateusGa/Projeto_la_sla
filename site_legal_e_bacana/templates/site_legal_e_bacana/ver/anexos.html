@@ -1,0 +1,27 @@
+{% extends "site_legal_e_bacana/modelo.html" %}
+
+{% block conteudo %}
+
+<div class="container">
+
+    <h1>{{ object.Anexo_nome }}</h1>
+
+    <hr>
+
+    <p>
+        <strong>Arquivo:</strong>
+        {{ object.Anexo_arquivo }}
+    </p>
+
+    <p>
+        <strong>Tamanho:</strong>
+        {{ object.Anexo_tamanho }}
+    </p>
+
+    <a href="{% url 'anexos_listar' %}" class="btn btn-primary">
+        Voltar
+    </a>
+
+</div>
+
+{% endblock conteudo %}

@@ -126,6 +126,12 @@
             <mxPoint x="440" y="480" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="pLM2A5rPwR8_Z-NI16Nt-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="0...*" vertex="1">
+          <mxGeometry height="30" width="60" x="240" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="pLM2A5rPwR8_Z-NI16Nt-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
+          <mxGeometry height="30" width="60" x="320" y="480" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

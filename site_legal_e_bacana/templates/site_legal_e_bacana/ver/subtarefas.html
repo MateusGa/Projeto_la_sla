@@ -1,0 +1,33 @@
+{% extends "site_legal_e_bacana/modelo.html" %}
+
+{% block conteudo %}
+
+<div class="container">
+
+    <h1>{{ object.Subtarefa_nome }}</h1>
+
+    <hr>
+
+    <p>
+        <strong>Matéria:</strong>
+        {{ object.Subtarefa_nome}}
+    </p>
+
+    <p>
+        <strong>Concluída:</strong>
+        {{ object.Subtarefa_concluida }}
+    </p>
+
+    <p>
+        <strong>Evento:</strong>
+        {{ object.Subtarefa_evento }}
+    </p>
+
+
+    <a href="{% url 'subtarefas_listar' %}" class="btn btn-primary">
+        Voltar
+    </a>
+
+</div>
+
+{% endblock conteudo %}

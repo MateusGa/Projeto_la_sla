@@ -20,7 +20,7 @@
             {{ form|crispy }}
 
 
-            {% if botao == "Excluir para Todo o Sempre"%}
+            {% if botao == "Excluir para Todo o Sempre" or botao == "Silencia-lo"%}
 
               <h4>Deseja realmente excluir este item?</h4>
 
@@ -28,9 +28,16 @@
                 {{ object }}
               </div>
 
-              <button type="submit" class="btn btn-danger">
-                  APAGUE IMEDIATAMENTE RAAAAAAAAHHHHHHHHHHHH🗣️🗣️🗣️🗣️🗣️🗣️🔥🔥🔥🔥🔥🔥
-              </button>
+              {% if botao == "Excluir para Todo o Sempre"%}
+                <button type="submit" class="btn btn-danger">
+                    APAGUE IMEDIATAMENTE RAAAAAAAAHHHHHHHHHHHH🗣️🗣️🗣️🗣️🗣️🗣️🔥🔥🔥🔥🔥🔥
+                </button>
+
+              {% else %}
+                <button type="submit" class="btn btn-danger">
+                   Silencie-o para que nunca mais volte. Você sabe de seus pecados, ele também. O que é apenas mais um?
+                </button>
+              {% endif %}
 
             {% else %}
               <button type="submit" class="btn btn-primary">

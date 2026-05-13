@@ -1,0 +1,67 @@
+{% extends "site_legal_e_bacana/modelo.html" %}
+{% load static %}
+
+{% block conteudo %}
+
+<style>
+h1{
+    font-family: Comic Sans MS;
+}
+</style>
+
+<div class="container">
+
+<h1 id="titulo">LISTA DE SUBTAREFAS</h1>
+
+<p>A LISTA DE SUBTAREFAS</p>
+
+<table class="table table-striped table-hover comic">
+
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {% for subtarefa in object_list %}
+        <tr>
+
+            <td>{{ subtarefa.Subtarefa_nome }}</td>
+
+            <td>
+                <a class="comic linhazinha" href="{% url "subtarefas_ver" subtarefa.pk %}">Ver</a> &emsp;
+
+                <a class="comic linhazinha" href="{% url "subtarefas_update" subtarefa.pk %}">
+                    Corrigir seus Erros
+                </a> &emsp;
+
+                <a class="comic linhazinha" href="{% url "subtarefas_delete" subtarefa.pk %}">
+                    APAGAR
+                </a>
+            </td>
+
+
+        </tr>
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+</div>
+
+<script>
+function corAleatoria() {
+    let r = Math.floor(Math.random()*256);
+    let g = Math.floor(Math.random()*256);
+    let b = Math.floor(Math.random()*256);
+    return `rgb(${r},${g},${b})`;
+}
+
+document.getElementById("titulo").style.color = corAleatoria();
+</script>
+
+{% endblock conteudo %}
