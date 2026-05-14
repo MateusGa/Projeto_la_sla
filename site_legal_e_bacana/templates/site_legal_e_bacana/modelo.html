@@ -110,6 +110,26 @@ footer{
     color:#fff9fe;
     padding:25px;
 }
+ .letra {
+    display: inline-block;
+    animation: onda 2s ease-in-out infinite;
+    color: initial;
+ }
+
+ @keyframes onda {
+
+  
+
+    25% {
+        transform: translateY(-10px);
+    }
+
+    75% {
+        transform: translateY(10px);
+    }
+
+   
+}
 
 
 </style>
@@ -121,7 +141,7 @@ footer{
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
 <div class="container">
 
-<a class="navbar-brand comic" href="{%url "Le_Start" %}" style="font-size: 25px;" >MeuSite</a>
+<a class="navbar-brand comic" href="{%url "Le_Start" %}" style="font-size: 25px;" >Calendário</a>
 
 <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
 <span class="navbar-toggler-icon"></span>
@@ -141,9 +161,12 @@ Menu
 </a>
 
 <ul class="dropdown-menu">
-<li><a class="dropdown-item comic" href="{% url 'eventos_create' %}">Cadastrar</a></li>
-<li><a class="dropdown-item comic" href="{% url 'eventos_listar' %}">Listar</a></li>
-<li><a class="dropdown-item comic" href="#">Opção 3</a></li>
+
+<li><a class="dropdown-item comic" href="{% url 'eventos_listar' %}">Eventos</a></li>
+<li><a class="dropdown-item comic" href="{% url 'subtarefas_listar' %}">Subtarefas</a></li>
+<li><a class="dropdown-item comic" href="{% url 'lembretes_listar' %}">Lembretes</a></li>
+<li><a class="dropdown-item comic" href="{% url 'anexos_listar' %}">Anexos</a></li>
+<li><a class="dropdown-item comic" href="{% url 'participantes_listar' %}">Participantes</a></li>
 </ul>
 </li>
 
@@ -174,6 +197,30 @@ function corAleatoria() {
 }
 
 document.getElementById("titulo").style.color = corAleatoria();
+
+const elementos = document.querySelectorAll(".ondinha");
+
+
+elementos.forEach(elemento => {
+    const texto = elemento.innerText;
+    elemento.innerHTML = "";
+    elemento.style.color = corAleatoria();
+
+    for(let i = 0; i < texto.length; i++) {
+
+        let span = document.createElement("span");
+        if(texto[i] == " ") {
+            span.innerHTML = "&nbsp;";
+        }
+        else {
+            span.innerText = texto[i];
+        }
+        span.classList.add("letra");
+        span.style.animationDelay = `${i * 0.1}s`;
+        elemento.appendChild(span);
+    }
+
+});
 </script>
 
 

@@ -57,7 +57,7 @@ class EventoCreate(CreateView):
 class EventoUpdate(UpdateView):
 
     model = Evento
-    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao", "Evento_anexos"]
+    fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {
@@ -199,7 +199,7 @@ class AnexoCreate(CreateView):
     success_url = reverse_lazy("Le_Start")
     extra_context = {
                 
-                "titulo" : "Criação de Subtarefas",
+                "titulo" : "Criação de Anexos",
                 "botao" : "Criar"
 
     }
@@ -271,7 +271,7 @@ class LembreteCreate(CreateView):
 class LembreteUpdate(UpdateView):
 
     model = Lembrete
-    fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho", "Lembrete_evento"]
+    fields =  ["Lembrete_nome", "Lembrete_date", "Lembrete_desc", "Lembrete_evento"]
     template_name = "site_legal_e_bacana/form.html"
     success_url = reverse_lazy("Le_Start")
     extra_context = {

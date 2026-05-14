@@ -43,9 +43,9 @@ class Subtarefa(models.Model):
     def __str__(self):
 
         if self.Subtarefa_concluida:
-            return (f"{self.Subtarefa_nome} - Concluído")
+            return (f"{self.Subtarefa_nome} - Concluído 👍👍👍")
         else:
-            return (f"{self.Subtarefa_nome} - Não Concluído 👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎")
+            return (f"{self.Subtarefa_nome} - Não Concluído 👎👎👎")
 
 
 class Anexo(models.Model):

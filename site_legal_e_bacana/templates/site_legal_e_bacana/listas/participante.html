@@ -6,6 +6,7 @@
 <style>
 h1{
     font-family: Comic Sans MS;
+    margin-top: 30px;
 }
 </style>
 
@@ -13,9 +14,9 @@ h1{
 
 <h1 id="titulo">LISTA DE PARTICIPANTES</h1>
 
-<p>A LISTA DE PARTICIPANTES</p>
 
-<table class="table table-striped table-hover comic">
+
+<table class="table table-striped table-hover comic" style="margin-top: 20px;">
 
     <thead>
         <tr>
@@ -49,6 +50,8 @@ h1{
     </tbody>
 
 </table>
+
+ <a class="comic linhazinha" href="{% url 'participantes_create' %}" style="border: 2px solid #00aeff; font-size: 30px">Criar</a> &emsp;
 
 </div>
 
