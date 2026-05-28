@@ -4,6 +4,14 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
+    
+    #Views para autenticação
+    
+    
+    
+    
+    
+    
     # path("admin/", admin.site.urls),
     path("", Index.as_view(), name="Le_Start"),
     path("Sobre_Nos/", Sobre.as_view(), name="sobre"),
