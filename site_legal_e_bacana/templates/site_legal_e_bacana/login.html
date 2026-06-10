@@ -1,0 +1,27 @@
+{% extends "site_legal_e_bacana/modelo.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block titulo %}
+Entrar
+{% endblock titulo %}
+
+{% block conteudo %}
+<section class="py-5 py-lg-6">
+  <div class="container">
+    <h3 class="text-center border-bottom pb-2 mb-4">Entrar</h3>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+        <p class="mt-3">Ainda não tem conta? <a href="{% url 'register' %}">Cadastre-se aqui</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}

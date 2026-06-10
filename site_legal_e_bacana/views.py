@@ -1,11 +1,16 @@
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView 
 from django.urls import reverse_lazy
 from datetime import *
 from .models import Evento, Subtarefa, Anexo, Lembrete, Usuario, Participante
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeDoneView
+from django.contrib.auth import logout, update_session_auth_hash
+from django.shortcuts import redirect
 
 
 
@@ -32,12 +37,55 @@ class Modelo(TemplateView):
     paginate_by = 50
 
 
+class UsuarioLogin(LoginView):
+    template_name = "site_legal_e_bacana/login.html"
+    redirect_authenticated_user = True
+
+
+def usuario_logout(request):
+    logout(request)
+    return redirect("login")
+
+
+class UsuarioRegister(CreateView):
+    model = User
+    form_class = UserCreationForm
+    template_name = "site_legal_e_bacana/form.html"
+    success_url = reverse_lazy("login")
+    extra_context = {
+        "titulo": "Cadastro de usuário",
+        "botao": "Cadastrar"
+    }
+
+
+class UsuarioPasswordChange(LoginRequiredMixin, FormView):
+    template_name = "site_legal_e_bacana/password_change_form.html"
+    form_class = SetPasswordForm
+    success_url = reverse_lazy("password_change_done")
+    login_url = reverse_lazy("login")
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.save()
+        update_session_auth_hash(self.request, form.user)
+        return super().form_valid(form)
+
+
+class UsuarioPasswordChangeDone(LoginRequiredMixin, PasswordChangeDoneView):
+    template_name = "site_legal_e_bacana/password_change_done.html"
+    login_url = reverse_lazy("login")
+
+
 
 
 #_________________________________________________Views para Eventos_________________________________________________#
 
 
-class EventoCreate(CreateView, LoginRequiredMixin):
+class EventoCreate(LoginRequiredMixin, CreateView):
 
     model = Evento
     fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao"]
@@ -51,7 +99,7 @@ class EventoCreate(CreateView, LoginRequiredMixin):
     }
 
 
-class EventoUpdate(UpdateView, LoginRequiredMixin):
+class EventoUpdate(LoginRequiredMixin, UpdateView):
 
     model = Evento
     fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao"]
@@ -65,7 +113,7 @@ class EventoUpdate(UpdateView, LoginRequiredMixin):
     }
 
 
-class EventoDelete(DeleteView, LoginRequiredMixin):
+class EventoDelete(LoginRequiredMixin, DeleteView):
 
     model = Evento
     template_name = "site_legal_e_bacana/form.html"
@@ -78,7 +126,7 @@ class EventoDelete(DeleteView, LoginRequiredMixin):
     }
 
 
-class EventoList(ListView, LoginRequiredMixin):
+class EventoList(LoginRequiredMixin, ListView):
 
     model = Evento
     template_name = "site_legal_e_bacana/listas/eventos.html"
@@ -98,7 +146,7 @@ class EventoList(ListView, LoginRequiredMixin):
         return queryset
 
 
-class EventoDetail(DetailView, LoginRequiredMixin):
+class EventoDetail(LoginRequiredMixin, DetailView):
 
     model = Evento
     fields =  ["Evento_nome", "Evento_tipo", "Evento_materia", "Evento_entrega", "Evento_repetir", "Evento_descricao", "Evento_anexos"]
@@ -118,7 +166,7 @@ class EventoDetail(DetailView, LoginRequiredMixin):
 #_________________________________________________Views para Subtarefas_________________________________________________#
 
 
-class SubtarefaCreate(CreateView, LoginRequiredMixin):
+class SubtarefaCreate(LoginRequiredMixin, CreateView):
 
     model = Subtarefa
     fields =  ["Subtarefa_nome", "Subtarefa_concluida", "Subtarefa_evento"]
@@ -132,7 +180,7 @@ class SubtarefaCreate(CreateView, LoginRequiredMixin):
     }
 
 
-class SubtarefaUpdate(UpdateView, LoginRequiredMixin):
+class SubtarefaUpdate(LoginRequiredMixin, UpdateView):
 
     model = Subtarefa
     fields =  ["Subtarefa_nome", "Subtarefa_concluida", "Subtarefa_evento"]
@@ -146,7 +194,7 @@ class SubtarefaUpdate(UpdateView, LoginRequiredMixin):
     }
 
 
-class SubtarefaDelete(DeleteView, LoginRequiredMixin):
+class SubtarefaDelete(LoginRequiredMixin, DeleteView):
 
     model = Subtarefa
     template_name = "site_legal_e_bacana/form.html"
@@ -159,13 +207,13 @@ class SubtarefaDelete(DeleteView, LoginRequiredMixin):
     }
 
 
-class SubtarefaList(ListView, LoginRequiredMixin):
+class SubtarefaList(LoginRequiredMixin, ListView):
 
     model = Subtarefa
     template_name = "site_legal_e_bacana/listas/subtarefas.html"
 
 
-class SubtarefaDetail(DetailView, LoginRequiredMixin):
+class SubtarefaDetail(LoginRequiredMixin, DetailView):
 
     model = Subtarefa
     template_name = "site_legal_e_bacana/ver/subtarefas.html"
@@ -177,7 +225,7 @@ class SubtarefaDetail(DetailView, LoginRequiredMixin):
 #_________________________________________________Views para Anexos_________________________________________________#
 
 
-class AnexoCreate(CreateView, LoginRequiredMixin):
+class AnexoCreate(LoginRequiredMixin, CreateView):
 
     model = Anexo
     fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho", "Anexo_evento"]
@@ -191,7 +239,7 @@ class AnexoCreate(CreateView, LoginRequiredMixin):
     }
 
 
-class AnexoUpdate(UpdateView, LoginRequiredMixin):
+class AnexoUpdate(LoginRequiredMixin, UpdateView):
 
     model = Anexo
     fields =  ["Anexo_nome", "Anexo_arquivo", "Anexo_tamanho", "Anexo_evento"]
@@ -205,7 +253,7 @@ class AnexoUpdate(UpdateView, LoginRequiredMixin):
     }
 
 
-class AnexoDelete(DeleteView, LoginRequiredMixin):
+class AnexoDelete(LoginRequiredMixin, DeleteView):
 
     model = Anexo
     template_name = "site_legal_e_bacana/form.html"
@@ -218,13 +266,13 @@ class AnexoDelete(DeleteView, LoginRequiredMixin):
     }
 
 
-class AnexoList(ListView, LoginRequiredMixin):
+class AnexoList(LoginRequiredMixin, ListView):
 
     model = Anexo
     template_name = "site_legal_e_bacana/listas/anexos.html"
 
 
-class AnexoDetail(DetailView, LoginRequiredMixin):
+class AnexoDetail(LoginRequiredMixin, DetailView):
 
     model = Anexo
     template_name = "site_legal_e_bacana/ver/anexos.html"
@@ -235,7 +283,7 @@ class AnexoDetail(DetailView, LoginRequiredMixin):
 #_________________________________________________Views para Lembretes_________________________________________________#
 
 
-class LembreteCreate(CreateView, LoginRequiredMixin):
+class LembreteCreate(LoginRequiredMixin, CreateView):
 
     model = Lembrete
     fields =  ["Lembrete_nome", "Lembrete_date", "Lembrete_desc", "Lembrete_evento"]
@@ -249,7 +297,7 @@ class LembreteCreate(CreateView, LoginRequiredMixin):
     }
 
 
-class LembreteUpdate(UpdateView, LoginRequiredMixin):
+class LembreteUpdate(LoginRequiredMixin, UpdateView):
 
     model = Lembrete
     fields =  ["Lembrete_nome", "Lembrete_date", "Lembrete_desc", "Lembrete_evento"]
@@ -263,7 +311,7 @@ class LembreteUpdate(UpdateView, LoginRequiredMixin):
     }
 
 
-class LembreteDelete(DeleteView, LoginRequiredMixin):
+class LembreteDelete(LoginRequiredMixin, DeleteView):
 
     model = Lembrete
     template_name = "site_legal_e_bacana/form.html"
@@ -276,13 +324,13 @@ class LembreteDelete(DeleteView, LoginRequiredMixin):
     }
 
 
-class LembreteList(ListView, LoginRequiredMixin):
+class LembreteList(LoginRequiredMixin, ListView):
 
     model = Lembrete
     template_name = "site_legal_e_bacana/listas/lembretes.html"
 
 
-class LembreteDetail(DetailView, LoginRequiredMixin):
+class LembreteDetail(LoginRequiredMixin, DetailView):
 
     model = Lembrete
     template_name = "site_legal_e_bacana/ver/lembretes.html"
@@ -291,7 +339,7 @@ class LembreteDetail(DetailView, LoginRequiredMixin):
 #_________________________________________________Views para Participantes_________________________________________________#
 
 
-class ParticipanteCreate(CreateView, LoginRequiredMixin):
+class ParticipanteCreate(LoginRequiredMixin, CreateView):
 
     model = Participante
     fields =  ["Participante_nome", "Participante_email", "Participante_senha"]
@@ -305,7 +353,7 @@ class ParticipanteCreate(CreateView, LoginRequiredMixin):
     }
 
 
-class ParticipanteUpdate(UpdateView, LoginRequiredMixin):
+class ParticipanteUpdate(LoginRequiredMixin, UpdateView):
 
     model = Participante
     fields =  ["Participante_nome", "Participante_email", "Participante_senha"]
@@ -319,7 +367,7 @@ class ParticipanteUpdate(UpdateView, LoginRequiredMixin):
     }
 
 
-class ParticipanteDelete(DeleteView, LoginRequiredMixin):
+class ParticipanteDelete(LoginRequiredMixin, DeleteView):
 
     model = Participante
     template_name = "site_legal_e_bacana/form.html"
@@ -332,13 +380,13 @@ class ParticipanteDelete(DeleteView, LoginRequiredMixin):
     }
 
 
-class ParticipanteList(ListView, LoginRequiredMixin):
+class ParticipanteList(LoginRequiredMixin, ListView):
 
     model = Participante
     template_name = "site_legal_e_bacana/listas/participante.html"
 
 
-class ParticipanteDetail(DetailView, LoginRequiredMixin):
+class ParticipanteDetail(LoginRequiredMixin, DetailView):
 
     model = Participante
     template_name = "site_legal_e_bacana/ver/participante.html"

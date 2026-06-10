@@ -6,6 +6,11 @@ from .views import *
 urlpatterns = [
     
     #Views para autenticação
+    path("login/", UsuarioLogin.as_view(), name="login"),
+    path("logout/", usuario_logout, name="logout"),
+    path("cadastro/", UsuarioRegister.as_view(), name="register"),
+    path("senha/alterar/", UsuarioPasswordChange.as_view(), name="password_change"),
+    path("senha/alterar/concluido/", UsuarioPasswordChangeDone.as_view(), name="password_change_done"),
     
     
     

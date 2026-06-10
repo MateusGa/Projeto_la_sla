@@ -174,6 +174,19 @@ Menu
 <a class="nav-link comic" href="{% url "sobre" %}">Sobre Nós</a>
 </li>
 
+{% if request.user.is_authenticated %}
+<li class="nav-item">
+<a class="nav-link comic" style="padding-left:70px;" href="{% url 'password_change' %}">Alterar senha</a>
+</li>
+<li class="nav-item">
+<a class="nav-link comic" style="color: rgb(253, 154, 154);" href="{% url 'logout' %}">Sair</a>
+</li>
+{% else %}
+<li class="nav-item">
+<a class="nav-link comic" style="padding-left:70px;" href="{% url 'login' %}">Entrar</a>
+</li>
+{% endif %}
+
 </ul>
 
 </div>
