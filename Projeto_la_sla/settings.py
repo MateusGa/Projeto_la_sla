@@ -91,7 +91,7 @@ WSGI_APPLICATION = "Projeto_la_sla.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
-DATABASE_URL='postgresql://neondb_owner:npg_bal7szQtcIe6@ep-dawn-thunder-acmtlsed-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
+DATABASE_URL='postgresql://neondb_owner:npg_awbEkn2d6QNe@ep-dawn-thunder-acmtlsed-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
 tmpPostgres = urlparse(DATABASE_URL)
 
 DATABASES = {
