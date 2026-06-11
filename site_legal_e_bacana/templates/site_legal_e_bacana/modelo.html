@@ -131,6 +131,11 @@ footer{
    
 }
 
+.onda {
+    display: inline-block;
+    animation: onda 2s ease-in-out infinite;
+}
+
 
 </style>
 
@@ -201,40 +206,6 @@ Menu
 <div class="container">
 
 <h1 id= "titulo" class="comic titulo mt-4">Título da Página</h1>
-<script>
-function corAleatoria() {
-    let r = Math.floor(Math.random()*256);
-    let g = Math.floor(Math.random()*256);
-    let b = Math.floor(Math.random()*256);
-    return `rgb(${r},${g},${b})`;
-}
-
-document.getElementById("titulo").style.color = corAleatoria();
-
-const elementos = document.querySelectorAll(".ondinha");
-
-
-elementos.forEach(elemento => {
-    const texto = elemento.innerText;
-    elemento.innerHTML = "";
-    elemento.style.color = corAleatoria();
-
-    for(let i = 0; i < texto.length; i++) {
-
-        let span = document.createElement("span");
-        if(texto[i] == " ") {
-            span.innerHTML = "&nbsp;";
-        }
-        else {
-            span.innerText = texto[i];
-        }
-        span.classList.add("letra");
-        span.style.animationDelay = `${i * 0.1}s`;
-        elemento.appendChild(span);
-    }
-
-});
-</script>
 
 
 <p>
@@ -277,7 +248,7 @@ O layout é simples, responsivo e utiliza algumas cores suaves.
 
 <h5 class="comic">Rodapé</h5>
 
-<p>© 2026 MeuSite - Todos os direitos reservados.</p>
+<p> © 2026 MeuSite - Todos os direitos reservados.</p>
 
 <p>Links úteis | Política de Privacidade | Contato</p>
 
@@ -287,6 +258,70 @@ O layout é simples, responsivo e utiliza algumas cores suaves.
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- Script para animação ondinha global -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    function corAleatoria() {
+        let r = Math.floor(Math.random()*256);
+        let g = Math.floor(Math.random()*256);
+        let b = Math.floor(Math.random()*256);
+        return `rgb(${r},${g},${b})`;
+    }
+
+    // Animar títulos
+    let titulo = document.getElementById("titulo");
+    if(titulo) {
+        titulo.style.color = corAleatoria();
+    }
+
+    // Animar elementos com class ondinha
+    const elementos = document.querySelectorAll(".ondinha");
+
+    elementos.forEach(elemento => {
+        const texto = elemento.innerText;
+        const corDoElemento = corAleatoria();
+        
+        // Copiar todas as classes do elemento pai (exceto ondinha)
+        const classesOriginais = Array.from(elemento.classList).filter(c => c !== "ondinha");
+        
+        // Salvar estilos computados
+        const computedStyle = window.getComputedStyle(elemento);
+        const fontFamily = computedStyle.fontFamily;
+        const fontSize = computedStyle.fontSize;
+        const fontWeight = computedStyle.fontWeight;
+        const fontStyle = computedStyle.fontStyle;
+        
+        elemento.innerHTML = "";
+        elemento.style.color = corDoElemento;
+
+        for(let i = 0; i < texto.length; i++) {
+            let span = document.createElement("span");
+            if(texto[i] == " ") {
+                span.innerHTML = "&nbsp;";
+            }
+            else {
+                span.innerText = texto[i];
+            }
+            
+            // Adicionar classe "letra"
+            span.classList.add("letra");
+            
+            // Adicionar classes originais do elemento pai
+            classesOriginais.forEach(classe => span.classList.add(classe));
+            
+            // Herdar estilos de fonte
+            span.style.fontFamily = fontFamily;
+            span.style.fontSize = fontSize;
+            span.style.fontWeight = fontWeight;
+            span.style.fontStyle = fontStyle;
+            span.style.color = corDoElemento;
+            
+            span.style.animationDelay = `${i * 0.1}s`;
+            elemento.appendChild(span);
+        }
+    });
+});
+</script>
 
 </body>
 </html>

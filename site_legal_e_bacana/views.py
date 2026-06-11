@@ -4,7 +4,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView 
 from django.urls import reverse_lazy
 from datetime import *
-from .models import Evento, Subtarefa, Anexo, Lembrete, Usuario, Participante
+from .models import Evento, Subtarefa, Anexo, Lembrete, User, Usuario, Participante
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
@@ -98,6 +98,21 @@ class EventoCreate(LoginRequiredMixin, CreateView):
 
     }
 
+    #Sobrescreve o método form_valid para associar o evento ao usuário logado
+    def form_valid(self, form):
+
+
+        #Só os dados da instância 
+        form.instance.Evento_usuario = self.request.user
+        #Valida os dados, cri o objeto, salva no banco e retorna a url
+        url = super().form_valid(form)
+
+        return url
+
+
+
+
+
 
 class EventoUpdate(LoginRequiredMixin, UpdateView):
 
@@ -112,6 +127,13 @@ class EventoUpdate(LoginRequiredMixin, UpdateView):
 
     }
 
+    def get_queryset(self):
+
+        #Filtra os eventos para mostrar apenas os do usuário logado
+        queryset = super().get_queryset().filter(Evento_usuario=self.request.user)
+
+        return queryset
+
 
 class EventoDelete(LoginRequiredMixin, DeleteView):
 
@@ -124,6 +146,12 @@ class EventoDelete(LoginRequiredMixin, DeleteView):
                 "botao" : "Excluir para Todo o Sempre"
 
     }
+    def get_queryset(self):
+
+        #Filtra os eventos para mostrar apenas os do usuário logado
+        queryset = super().get_queryset().filter(Evento_usuario=self.request.user)
+
+        return queryset
 
 
 class EventoList(LoginRequiredMixin, ListView):
@@ -133,7 +161,8 @@ class EventoList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
 
-        queryset = super().get_queryset().order_by("-Evento_entrega")
+        # Filtra apenas os eventos do usuário logado e preserva a ordenação
+        queryset = super().get_queryset().filter(Evento_usuario=self.request.user).order_by("-Evento_entrega")
 
         hoje = date.today()
 
@@ -142,7 +171,7 @@ class EventoList(LoginRequiredMixin, ListView):
             evento.dias = (
                 evento.Evento_entrega - hoje
             ).days
-
+        
         return queryset
 
 
@@ -158,6 +187,12 @@ class EventoDetail(LoginRequiredMixin, DetailView):
                 "botao" : "Voltar"
 
     }
+
+    def get_queryset(self):
+        # Mostrar somente detalhes de eventos do usuário logado
+        queryset = super().get_queryset().filter(Evento_usuario=self.request.user)
+
+        return queryset
 
 
 
@@ -179,6 +214,16 @@ class SubtarefaCreate(LoginRequiredMixin, CreateView):
 
     }
 
+    def form_valid(self, form):
+
+
+        #Só os dados da instância 
+        form.instance.Subtarefa_usuario = self.request.user
+        #Valida os dados, cri o objeto, salva no banco e retorna a url
+        url = super().form_valid(form)
+
+        return url
+
 
 class SubtarefaUpdate(LoginRequiredMixin, UpdateView):
 
@@ -192,6 +237,11 @@ class SubtarefaUpdate(LoginRequiredMixin, UpdateView):
                 "botao" : "Salvar"
 
     }
+    def get_queryset(self):
+        # Filtra as subtarefas para mostrar apenas as do usuário logado
+        queryset = super().get_queryset().filter(Subtarefa_usuario=self.request.user)
+
+        return queryset
 
 
 class SubtarefaDelete(LoginRequiredMixin, DeleteView):
@@ -205,18 +255,31 @@ class SubtarefaDelete(LoginRequiredMixin, DeleteView):
                 "botao" : "Excluir para Todo o Sempre"
 
     }
+    def get_queryset(self):
+        # Filtra as subtarefas para mostrar apenas as do usuário logado
+        queryset = super().get_queryset().filter(Subtarefa_usuario=self.request.user)
+
+        return queryset
 
 
 class SubtarefaList(LoginRequiredMixin, ListView):
 
     model = Subtarefa
     template_name = "site_legal_e_bacana/listas/subtarefas.html"
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Subtarefa_usuario=self.request.user)
+
+        return queryset
 
 
 class SubtarefaDetail(LoginRequiredMixin, DetailView):
 
     model = Subtarefa
     template_name = "site_legal_e_bacana/ver/subtarefas.html"
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Subtarefa_usuario=self.request.user)
+
+        return queryset
 
 
 
@@ -237,6 +300,15 @@ class AnexoCreate(LoginRequiredMixin, CreateView):
                 "botao" : "Criar"
 
     }
+    def form_valid(self, form):
+
+
+        #Só os dados da instância 
+        form.instance.Anexo_usuario = self.request.user
+        #Valida os dados, cri o objeto, salva no banco e retorna a url
+        url = super().form_valid(form)
+
+        return url
 
 
 class AnexoUpdate(LoginRequiredMixin, UpdateView):
@@ -251,6 +323,10 @@ class AnexoUpdate(LoginRequiredMixin, UpdateView):
                 "botao" : "Salvar"
 
     }
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Anexo_usuario=self.request.user)
+
+        return queryset
 
 
 class AnexoDelete(LoginRequiredMixin, DeleteView):
@@ -264,18 +340,30 @@ class AnexoDelete(LoginRequiredMixin, DeleteView):
                 "botao" : "Excluir para Todo o Sempre"
 
     }
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Anexo_usuario=self.request.user)
+
+        return queryset
 
 
 class AnexoList(LoginRequiredMixin, ListView):
 
     model = Anexo
     template_name = "site_legal_e_bacana/listas/anexos.html"
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Anexo_usuario=self.request.user)
+
+        return queryset
 
 
 class AnexoDetail(LoginRequiredMixin, DetailView):
 
     model = Anexo
     template_name = "site_legal_e_bacana/ver/anexos.html"
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Anexo_usuario=self.request.user)
+
+        return queryset
 
 
 
@@ -295,6 +383,15 @@ class LembreteCreate(LoginRequiredMixin, CreateView):
                 "botao" : "Criar"
 
     }
+    def form_valid(self, form):
+
+
+        #Só os dados da instância 
+        form.instance.Lembrete_usuario = self.request.user
+        #Valida os dados, cri o objeto, salva no banco e retorna a url
+        url = super().form_valid(form)
+
+        return url
 
 
 class LembreteUpdate(LoginRequiredMixin, UpdateView):
@@ -309,6 +406,10 @@ class LembreteUpdate(LoginRequiredMixin, UpdateView):
                 "botao" : "Salvar"
 
     }
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Lembrete_usuario=self.request.user)
+
+        return queryset
 
 
 class LembreteDelete(LoginRequiredMixin, DeleteView):
@@ -322,18 +423,30 @@ class LembreteDelete(LoginRequiredMixin, DeleteView):
                 "botao" : "Excluir para Todo o Sempre"
 
     }
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Lembrete_usuario=self.request.user)
+
+        return queryset
 
 
 class LembreteList(LoginRequiredMixin, ListView):
 
     model = Lembrete
     template_name = "site_legal_e_bacana/listas/lembretes.html"
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Lembrete_usuario=self.request.user)
+
+        return queryset
 
 
 class LembreteDetail(LoginRequiredMixin, DetailView):
 
     model = Lembrete
     template_name = "site_legal_e_bacana/ver/lembretes.html"
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Lembrete_usuario=self.request.user)
+
+        return queryset
 
 
 #_________________________________________________Views para Participantes_________________________________________________#
@@ -352,6 +465,16 @@ class ParticipanteCreate(LoginRequiredMixin, CreateView):
 
     }
 
+    def form_valid(self, form):
+
+
+        #Só os dados da instância 
+        form.instance.Participante_usuario = self.request.user
+        #Valida os dados, cri o objeto, salva no banco e retorna a url
+        url = super().form_valid(form)
+
+        return url
+
 
 class ParticipanteUpdate(LoginRequiredMixin, UpdateView):
 
@@ -365,6 +488,10 @@ class ParticipanteUpdate(LoginRequiredMixin, UpdateView):
                 "botao" : "Salvar"
 
     }
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Participante_usuario=self.request.user)
+
+        return queryset
 
 
 class ParticipanteDelete(LoginRequiredMixin, DeleteView):
@@ -378,15 +505,27 @@ class ParticipanteDelete(LoginRequiredMixin, DeleteView):
                 "botao" : "Silencia-lo"
 
     }
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Participante_usuario=self.request.user)
+
+        return queryset
 
 
 class ParticipanteList(LoginRequiredMixin, ListView):
 
     model = Participante
     template_name = "site_legal_e_bacana/listas/participante.html"
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Participante_usuario=self.request.user)
+
+        return queryset
 
 
 class ParticipanteDetail(LoginRequiredMixin, DetailView):
 
     model = Participante
     template_name = "site_legal_e_bacana/ver/participante.html"
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Participante_usuario=self.request.user)
+
+        return queryset

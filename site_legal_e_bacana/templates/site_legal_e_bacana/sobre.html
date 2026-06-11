@@ -85,56 +85,6 @@
         <img src="{% static 'imagens\Casos de Calendario.drawio.png' %}" style="border: 5px solid #333;">
     </div>
     
-    <script>
-    function corAleatoria() {
-    let r = Math.floor(Math.random()*256);
-    let g = Math.floor(Math.random()*256);
-    let b = Math.floor(Math.random()*256);
-    return `rgb(${r},${g},${b})`;
-}
-
-const elementos = document.querySelectorAll(".ondinha");
-
-
-elementos.forEach(elemento => {
-
-    const texto = elemento.innerText;
-
-    elemento.innerHTML = "";
-
-    elemento.style.color = corAleatoria();
-
-
-    for(let i = 0; i < texto.length; i++) {
-
-        let span = document.createElement("span");
-
-        if(texto[i] == " ") {
-            span.innerHTML = "&nbsp;";
-        }
-
-        else {
-            span.innerText = texto[i];
-        }
-
-        span.classList.add("letra");
-
-        span.style.animationDelay = `${i * 0.1}s`;
-
-
-        elemento.appendChild(span);
-    }
-
-});
-
-
-const cores = document.querySelectorAll(".titulo");
-cores.forEach(cores => {
-
-    cores.style.color = corAleatoria();
-
-});
-</script>
     {%endblock conteudo%}
 </body>
 </html>

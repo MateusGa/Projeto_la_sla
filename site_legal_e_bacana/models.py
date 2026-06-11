@@ -26,9 +26,8 @@ class Evento(models.Model):
     #tem que fazer com url
 
 
-    #Evento_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    Evento_usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     
-
     def __str__(self):
         return f"{self.Evento_nome}"
     
@@ -46,6 +45,8 @@ class Subtarefa(models.Model):
             return (f"{self.Subtarefa_nome} - Concluído 👍👍👍")
         else:
             return (f"{self.Subtarefa_nome} - Não Concluído 👎👎👎")
+    
+    Subtarefa_usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
 
 class Anexo(models.Model):
@@ -58,6 +59,8 @@ class Anexo(models.Model):
     
     def __str__(self):
         return f"{self.Anexo_nome}"
+    
+    Anexo_usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
 
 class Lembrete(models.Model):
@@ -70,6 +73,8 @@ class Lembrete(models.Model):
 
     def __str__(self):
         return f"{self.Lembrete_nome}"
+    
+    Lembrete_usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
 class Participante(models.Model):
 
@@ -79,3 +84,5 @@ class Participante(models.Model):
 
     def __str__(self):
         return f"{self.Participante_nome}"
+    
+    Participante_usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE)
